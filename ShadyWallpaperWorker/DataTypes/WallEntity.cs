@@ -8,7 +8,7 @@ using System.Web;
 
 namespace ShadyWallpaperService.DataTypes
 {
-    [BsonIgnoreExtraElements]
+    [DataContract]
     public class WallEntity
     {
         public string WallUrl;
@@ -18,6 +18,6 @@ namespace ShadyWallpaperService.DataTypes
         public long ThreadId;
         public int B16X9;
         public int B4X3;
-        public int Time;
+        public long Time;
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Web;
 
 namespace ShadyWallpaperService.DataTypes
@@ -16,12 +17,5 @@ namespace ShadyWallpaperService.DataTypes
         public long Time;
         public string OpContent;
         public IEnumerable<WallEntity> Walls;
-
-        public ThreadEntity() { }
-        public ThreadEntity(long id, IEnumerable<WallEntity> walls)
-        {
-            Id = id;
-            Walls = walls;
-        }
     }
 }
