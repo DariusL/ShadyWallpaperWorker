@@ -24,7 +24,7 @@ namespace ShadyWallpaperWorker.DataTypes
             ret.Board = board;
             ret.Walls = Posts
                 .Select(w => w.CreateEntity(board, id))
-                .Where(w => w.B16X9 != (int)R16By9.None || w.B4X3 != (int)R4By3.None);
+                .Where(w => w.B16X9 != (int)R16By9.NA || w.B4X3 != (int)R4By3.NA);
             return ret;
                     
         }

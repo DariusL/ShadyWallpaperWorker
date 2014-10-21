@@ -16,6 +16,7 @@ namespace ShadyWallpaperService.DataTypes
         public string Board;
         public long Time;
         public string OpContent;
+        [BsonIgnore]
         public IEnumerable<WallEntity> Walls;
     }
 }

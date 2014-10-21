@@ -49,12 +49,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes\ChanThreadEntity.cs" />
+    <Compile Include="DataTypes\ChanThreadInfo.cs" />
+    <Compile Include="DataTypes\ChanThreadPage.cs" />
     <Compile Include="DataTypes\ChanWallEntity.cs" />
     <Compile Include="DataTypes\ThreadEntity.cs" />
     <Compile Include="DataTypes\Types.cs" />
     <Compile Include="DataTypes\WallEntity.cs" />
+    <Compile Include="Keys.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThreadUpdater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

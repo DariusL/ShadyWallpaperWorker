@@ -10,22 +10,20 @@ namespace ShadyWallpaperWorker
 {
     static class Program
     {
-        private static Queue<string> jobs = new Queue<string>();
+        private static readonly string[] boards = new string[] { "w", "wg" };
 
         static void Main(string[] args)
         {
-            var request = WebRequest.Create("http://a.4cdn.org/wg/thread/5957541.json") as HttpWebRequest;
-            using(var response = request.GetResponse() as HttpWebResponse)
-            {
-                var data = ChanThreadEntity.CreateThread(response.GetResponseStream(), 5957541, "wg");
-            }
+            var updater = new ThreadUpdater(boards);
+            updater.StartUpdating();
         }
 
-        public static void ForEach<T>(this IEnumerable<T> collection, Action<T> action)
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)
         {
             foreach(var item in collection)
             {
                 action(item);
+                yield return item;
             }
         }
     }

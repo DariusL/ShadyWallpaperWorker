@@ -34,7 +34,7 @@ namespace ShadyWallpaperWorker.DataTypes
             ret.B16X9 = (int)TypeUtils.FromSizeR16By9(Width, Height);
             ret.B4X3 = (int)TypeUtils.FromSizeR4By3(Width, Height);
             ret.Time = Time;
-            ret.WallUrl = String.Format("http://i.4cdn.org/{0}/{1}.{2}", board, Filename, Ext);
+            ret.WallUrl = String.Format("http://i.4cdn.org/{0}/{1}{2}", board, Filename, Ext);
             ret.ThumbUrl = String.Format("http://t.4cdn.org/{0}/{1}s.jpg", board, Filename);
             return ret;
         }
