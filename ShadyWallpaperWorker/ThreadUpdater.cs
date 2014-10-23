@@ -69,8 +69,13 @@ namespace ShadyWallpaperWorker
                 if (response == null || response.StatusCode != HttpStatusCode.OK)
                     return;
 
-                var chanThreads = (serializer.ReadObject(response.GetResponseStream()) as List<ChanThreadPage>).SelectMany(t => t.Threads);
-                var dbThreads = threadCollection.FindAllAs<ThreadEntity>().ToDictionary(t => t.Id);
+                var chanThreads = (serializer.ReadObject(response.GetResponseStream()) as List<ChanThreadPage>)
+                    .SelectMany(t => t.Threads);//flatten pages
+
+                var dbThreads = threadCollection.AsQueryable<ThreadEntity>()
+                    .Where(t => t.Board == board)
+                    .ToDictionary(t => t.Id);
+
                 foreach (var thread in chanThreads)
                 {
                     if (dbThreads.ContainsKey(thread.Id))
@@ -121,16 +126,20 @@ namespace ShadyWallpaperWorker
                 var newest = postCollection.AsQueryable<WallEntity>()
                     .Where(w => w.ThreadId == job.Id)
                     .OrderBy(w => w.Time)
-                    .Take(1);
+                    .Take(1)
+                    .ToList();
                 var walls = data.Walls;
                 if(newest.Count() > 0)
                 {
-                    walls = walls.Where(w => w.Time > newest.Single().Time);
+                    walls = walls.Where(w => w.Time > newest.Single().Time); 
                 }
-                if(data.Walls != null && data.Walls.Count() != 0)
+                if(walls.Count() > 0)
+                {
+                    postCollection.InsertBatch<WallEntity>(walls);
+                }
+                if(data.Walls.Count() > 0)
                 {
                     threadCollection.Save<ThreadEntity>(data);
-                    postCollection.InsertBatch<WallEntity>(walls);
                 }
             }
         }

@@ -9,6 +9,7 @@ using System.Web;
 namespace ShadyWallpaperService.DataTypes
 {
     [DataContract]
+    [BsonIgnoreExtraElements]
     public class WallEntity
     {
         public string WallUrl;
