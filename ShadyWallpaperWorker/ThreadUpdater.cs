@@ -123,27 +123,20 @@ namespace ShadyWallpaperWorker
             using(var response = request.GetResponse() as HttpWebResponse)
             {
                 var data = ChanThreadEntity.Parse(response.GetResponseStream(), job.Id, job.Board);
-                var newest = postCollection.AsQueryable<WallEntity>()
-                    .Where(w => w.ThreadId == job.Id)
-                    .OrderBy(w => w.Time)
-                    .Take(1)
-                    .ToList();
-                var walls = data.Posts
-                    .Select(w => w.CreateEntity(job.Board, job.Id))
-                    .Where(w => w.B16X9 != (int)R16By9.NA || w.B4X3 != (int)R4By3.NA);
-                bool hasWalls = walls.Count() > 0;
-                if (newest.Count() > 0)
-                {
-                    walls = walls.Where(w => w.Time > newest.Single().Time); 
-                }
-                if (walls.Count() > 0)
-                {
-                    postCollection.InsertBatch<WallEntity>(walls);
-                }
-                if (hasWalls)
-                {
-                    threadCollection.Save<ThreadEntity>(data.CreateThread(job.Id, job.Board));
-                }
+
+                if(!data.Sticky)
+                {   
+                    var walls = data.Posts
+                        .Select(w => w.CreateEntity(job.Board, job.Id))
+                        .Where(w => w.B16X9 != (int)R16By9.NA || w.B4X3 != (int)R4By3.NA);
+
+                    if(walls.Count() > 0)
+                    {
+                        postCollection.Remove(Query<WallEntity>.EQ(w => w.ThreadId, job.Id));
+                        postCollection.InsertBatch<WallEntity>(walls);
+                        threadCollection.Save<ThreadEntity>(data.CreateThread(job.Id, job.Board));
+                    }
+                }                
             }
         }
     }

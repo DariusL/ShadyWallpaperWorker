@@ -25,6 +25,8 @@ namespace ShadyWallpaperWorker.DataTypes
         public int Deleted { get; set; }
         [DataMember(Name = "com")]
         public string Comment { get; set; }
+        [DataMember(Name = "sticky")]
+        public int Sticky { get; set; }
 
         public WallEntity CreateEntity(string board, long thread)
         {

@@ -16,7 +16,6 @@ namespace ShadyWallpaperWorker
         {
             var updater = new ThreadUpdater(boards);
             updater.StartUpdating();
-            Console.ReadLine();
         }
 
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)

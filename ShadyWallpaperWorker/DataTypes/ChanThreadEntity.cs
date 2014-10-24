@@ -15,6 +15,8 @@ namespace ShadyWallpaperWorker.DataTypes
         [DataMember(Name = "posts")]
         public IEnumerable<ChanWallEntity> Posts{ get; set; }
 
+        public bool Sticky { get; private set; }
+
         public ThreadEntity CreateThread(long id, string board)
         {
             var ret = new ThreadEntity();
@@ -26,10 +28,13 @@ namespace ShadyWallpaperWorker.DataTypes
             return ret;
                     
         }
+
         public static ChanThreadEntity Parse(System.IO.Stream response, long id, string board)
         {
             var threadDeserializer = new DataContractJsonSerializer(typeof(ChanThreadEntity));
-            return threadDeserializer.ReadObject(response) as ChanThreadEntity;
+            var ret =  threadDeserializer.ReadObject(response) as ChanThreadEntity;
+            ret.Sticky = ret.Posts.First().Sticky == 1;
+            return ret;
         }
     }
 }
