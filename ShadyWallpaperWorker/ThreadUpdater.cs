@@ -128,7 +128,7 @@ namespace ShadyWallpaperWorker
                 {   
                     var walls = data.Posts
                         .Select(w => w.CreateEntity(job.Board, job.Id))
-                        .Where(w => w.B16X9 != (int)R16By9.NA || w.B4X3 != (int)R4By3.NA);
+                        .Where(w => w.B16X9 != (int)R16By9.None || w.B4X3 != (int)R4By3.None);
 
                     if(walls.Count() > 0)
                     {

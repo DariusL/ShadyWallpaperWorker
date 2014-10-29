@@ -15,7 +15,6 @@ namespace ShadyWallpaperService.DataTypes
         R2560By1440,
         R3840By2160,
         R7680By4320,
-        NA,
         None
     }
 
@@ -26,7 +25,6 @@ namespace ShadyWallpaperService.DataTypes
         R1024X768,
         R1280By1024,
         R1600By1200,
-        NA,
         None
     }
 
@@ -60,7 +58,7 @@ namespace ShadyWallpaperService.DataTypes
                 if (width >= 1280 && height >= 720)
                     return R16By9.R1280By720;
             }
-            return R16By9.NA;
+            return R16By9.None;
         }
 
         internal static R4By3 FromSizeR4By3(int width, int height)
@@ -77,7 +75,7 @@ namespace ShadyWallpaperService.DataTypes
                     return R4By3.R800X600;
             }
 
-            return R4By3.NA;
+            return R4By3.None;
         }
     }
 }
